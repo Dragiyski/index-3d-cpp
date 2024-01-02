@@ -284,12 +284,14 @@ std::shared_ptr<Node> compile_node(const MeshData &data, const std::vector<uint3
             auto location = std::lower_bound(max_vertex_list.begin(), max_vertex_list.end(), affinity_list[index].first, [](decltype(max_vertex_list)::value_type a, decltype(affinity_list[index].first) b) {
                 return a.first < b;
             });
+            assert(location != max_vertex_list.end());
             min_group.push_back(*location);
         }
         for (auto index = min_group.size(); index < affinity_list.size(); ++index) {
             auto location = std::lower_bound(min_vertex_list.begin(), min_vertex_list.end(), affinity_list[index].first, [](decltype(min_vertex_list)::value_type a, decltype(affinity_list[index].first) b) {
                 return a.first < b;
             });
+            assert(location != min_vertex_list.end());
             max_group.push_back(*location);
         }
         std::sort(min_group.begin(), min_group.end(), [](decltype(min_group)::value_type a, decltype(min_group)::value_type b) {
